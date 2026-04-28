@@ -1,1 +1,1 @@
-export const DomainPath = "http://localhost:3000"
+export const DomainPath = "https://cinema-msn.vercel.app"
