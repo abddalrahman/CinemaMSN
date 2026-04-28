@@ -19,6 +19,8 @@ export const metadata = {
 	},
 }
 
+export const dynamic = 'force-dynamic';
+
 const Profile = async ({params}) => {
 	const getParams = await params;
 	const userId = Number(getParams.id) || null;

@@ -3,6 +3,8 @@ import { cookies } from 'next/headers'
 import React from 'react'
 import Navbar from './Navbar';
 
+export const dynamic = 'force-dynamic';
+
 const Header = async () => {
 	const cookieStorage = await cookies();
 	const jwt = cookieStorage.get("jwtToken")?.value || null;
