@@ -1,0 +1,100 @@
+
+.hero-swip .swiper-button-prev,
+.hero-swip .swiper-button-next {
+	border: 3px solid var(--mainRed);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	border-radius: 50%;
+	-webkit-border-radius: 50%;
+	-moz-border-radius: 50%;
+	-ms-border-radius: 50%;
+	-o-border-radius: 50%;
+	transition: var(--main-transition);
+	-webkit-transition: var(--main-transition);
+	-moz-transition: var(--main-transition);
+	-ms-transition: var(--main-transition);
+	-o-transition: var(--main-transition);
+	@media screen and (max-width: 765px) {
+		display: none;
+	}
+}
+.hero-swip .swiper-button-prev:hover,
+.hero-swip .swiper-button-next:hover {
+	background-color: var(--mainRed);
+}
+.hero-swip .swiper-button-prev svg,
+.hero-swip .swiper-button-next svg {
+	width: 10px;
+	height: 20px;
+	color: #fff;
+}
+.hero-slide::before {
+	content: '';
+	position: absolute;
+	top: 0px;
+	height: 0px;
+	width: 100%;
+	height: 100%;
+	background-image: linear-gradient(90deg, #000000d1, #0000004d);
+	z-index: 1;
+}
+.hero-slide img{
+	object-fit: cover;
+	object-position: center;
+	height: 100%;
+	width: 100%;
+}
+
+.hero-slide > div {
+	z-index: 10;
+	top: 0px;
+	width: 90%;
+	inset-inline-start: 5%;
+}
+.hero-slide > div > div {
+	width: 50%;
+	@media screen and (max-width: 991px) {
+		width: 100%;
+	}
+}
+.hero-slide > div > div:first-of-type > span {
+	background-image: linear-gradient(90deg, #41454d, #64676d00);
+}
+.hero-slide > div > div:first-of-type > span::before {
+	content: '';
+	position: absolute;
+	top: 0px;
+	inset-inline-start: 0px;
+	width: 5px;
+	height: 100%;
+	background-color: #f71616bf;
+}
+.hero-slide > div > div h2 {
+	width: 90%;
+}
+.hero-slide > div > div p {
+	width: 90%;
+}
+.hero-slide > div > div a {
+	border-radius: 2px;
+	-webkit-border-radius: 2px;
+	-moz-border-radius: 2px;
+	-ms-border-radius: 2px;
+	-o-border-radius: 2px;
+}
+.hero-slide > div > div.run-trailer > div {
+	transition: var(--main-transition);
+	-webkit-transition: var(--main-transition);
+	-moz-transition: var(--main-transition);
+	-ms-transition: var(--main-transition);
+	-o-transition: var(--main-transition);
+	filter: drop-shadow(0px 0px 7px #0000006e);
+	-webkit-filter: drop-shadow(0px 0px 7px #0000006e);
+}
+.hero-slide > div > div.run-trailer > div:hover {
+	color: var(--mainGray);
+}
+
+/* --------------------- mostp popular movies */
+

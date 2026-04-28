@@ -1,0 +1,1 @@
+export const DomainPath = "http://localhost:3000"

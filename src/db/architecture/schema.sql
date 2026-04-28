@@ -1,0 +1,305 @@
+CREATE TABLE content (
+	content_id BIGINT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+	title VARCHAR(255) NOT NULL,
+	summary TEXT NOT NULL,
+	poster_url VARCHAR(500) NOT NULL,
+	trailer_url VARCHAR(500) DEFAULT 'No Data',
+	release_month SMALLINT CHECK (release_month BETWEEN 1 AND 12) NOT NULL,
+	release_year INT NOT NULL,
+	duration_minutes INT NOT NULL,
+	filming_location VARCHAR(255) DEFAULT 'No Data',
+	budget BIGINT DEFAULT 0,
+	revenue BIGINT DEFAULT 0,
+	country VARCHAR(100) NOT NULL,
+	is_expected_popular BOOLEAN DEFAULT FALSE,
+	release_date DATE,
+	language VARCHAR(50),
+	c_status VARCHAR(20) CHECK (c_status IN ('upcoming','available','hidden')) NOT NULL DEFAULT 'available',
+	season_number INT NOT NULL DEFAULT 1,
+	episodes_count INT NOT NULL DEFAULT 0,
+	created_at TIMESTAMP WITHOUT TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	updated_at TIMESTAMP WITHOUT TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	content_type VARCHAR(20) CHECK (content_type IN ('M','S')) NOT NULL
+);
+
+CREATE TABLE news (
+	news_id BIGINT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+	title VARCHAR(255) NOT NULL,
+	body TEXT NOT NULL,
+	created_at TIMESTAMP WITHOUT TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	updated_at TIMESTAMP WITHOUT TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	image_url VARCHAR(500) DEFAULT 'No Data',
+	is_about_movies  BOOLEAN NOT NULL DEFAULT FALSE,
+	is_about_series  BOOLEAN NOT NULL DEFAULT FALSE,
+	is_about_people  BOOLEAN NOT NULL DEFAULT FALSE
+);
+
+CREATE TABLE people (
+	person_id BIGINT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+	p_name VARCHAR(100) NOT NULL,
+	image_url VARCHAR(500) DEFAULT 'No Data',
+	bio TEXT DEFAULT 'No Data',
+	birth_date TEXT,
+	height_cm INT DEFAULT 0,
+	children_count INT DEFAULT 0,
+	nationality VARCHAR(100),
+	popularity BIGINT DEFAULT 0,
+	created_at TIMESTAMP WITHOUT TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	updated_at TIMESTAMP WITHOUT TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE users (
+	user_id BIGINT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+	username VARCHAR(100) NOT NULL,
+	bio TEXT DEFAULT 'No Data',
+	profile_image_url VARCHAR(500) DEFAULT 'No Data',
+	email VARCHAR(255) NOT NULL UNIQUE,
+	password_hash VARCHAR(255) NOT NULL,
+	u_role VARCHAR(20) CHECK (u_role IN ('admin', 'helper', 'user')) NOT NULL DEFAULT 'user',
+	created_at TIMESTAMP WITHOUT TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP, 
+	updated_at TIMESTAMP WITHOUT TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	is_watchlist_private BOOLEAN NOT NULL DEFAULT FALSE,
+	is_watched_private BOOLEAN NOT NULL DEFAULT FALSE,
+	is_news_saved_private BOOLEAN NOT NULL DEFAULT FALSE,
+	is_favorite_people_private BOOLEAN NOT NULL DEFAULT FALSE,
+	is_ratings_private BOOLEAN NOT NULL DEFAULT FALSE,
+	u_status VARCHAR(20) CHECK (u_status IN ('active','banned', 'nactive')) NOT NULL DEFAULT 'nactive'
+);
+
+CREATE TABLE genres ( 
+	genre_id BIGINT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+	kind VARCHAR(20) CHECK (kind IN ('person_role',	'content_genre','content_award','person_award')) NOT NULL,
+	name VARCHAR(255) NOT NULL,
+	description TEXT NOT NULL DEFAULT 'no description yet',
+	UNIQUE (kind, name)
+);
+
+CREATE TABLE content_people (
+	person_id BIGINT NOT NULL,
+	content_id BIGINT NOT NULL,
+	role_genre_id BIGINT NOT NULL,
+	is_lead BOOLEAN NOT NULL DEFAULT FALSE,
+	PRIMARY KEY (person_id, content_id, role_genre_id),
+	FOREIGN KEY (person_id) REFERENCES people(person_id) ON DELETE CASCADE,
+	FOREIGN KEY (content_id) REFERENCES content(content_id) ON DELETE CASCADE,
+	FOREIGN KEY (role_genre_id) REFERENCES genres(genre_id) ON DELETE CASCADE
+);
+
+CREATE TABLE ratings (
+	content_id BIGINT NOT NULL,
+	user_id BIGINT NOT NULL,
+	score SMALLINT NOT NULL CHECK (score BETWEEN 1 AND 10),
+	created_at TIMESTAMP WITHOUT TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	updated_at TIMESTAMP WITHOUT TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	PRIMARY KEY (user_id, content_id),
+	FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE,
+	FOREIGN KEY (content_id) REFERENCES content(content_id) ON DELETE CASCADE
+);
+
+CREATE TABLE news_people (
+	news_id BIGINT NOT NULL,
+	person_id BIGINT NOT NULL,
+	created_at TIMESTAMP WITHOUT TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	PRIMARY KEY (person_id, news_id),
+	FOREIGN KEY (news_id) REFERENCES news(news_id) ON DELETE CASCADE,
+	FOREIGN KEY (person_id) REFERENCES people(person_id) ON DELETE CASCADE
+);
+
+CREATE TABLE news_content (
+	news_id BIGINT NOT NULL,
+	content_id BIGINT NOT NULL,
+	created_at TIMESTAMP WITHOUT TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	PRIMARY KEY (news_id, content_id),
+	FOREIGN KEY (news_id) REFERENCES news(news_id) ON DELETE CASCADE,
+	FOREIGN KEY (content_id) REFERENCES content(content_id) ON DELETE CASCADE
+);
+
+CREATE TABLE comments (
+	comment_id BIGINT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+	user_id BIGINT NOT NULL,
+	content_id BIGINT NOT NULL,
+	title VARCHAR(255) NOT NULL,
+	body TEXT NOT NULL,
+	created_at TIMESTAMP WITHOUT TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	updated_at TIMESTAMP WITHOUT TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	likes_count INT DEFAULT 0,
+	is_spoiler_by_author BOOLEAN DEFAULT FALSE,
+	spoiler_reports_count INT DEFAULT 0,
+	abuse_reports_count INT DEFAULT 0,
+	UNIQUE (user_id, content_id),
+	FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE,
+	FOREIGN KEY (content_id) REFERENCES content(content_id) ON DELETE CASCADE
+);
+
+CREATE TABLE active_with_comments (
+	user_id BIGINT NOT NULL,
+	comment_id bigint NOT NULL,
+	content_id BIGINT NOT NULL,
+	active VARCHAR(20) CHECK (active IN ('like','spoiler', 'report')) NOT NULL,
+	created_at TIMESTAMP WITHOUT TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	PRIMARY KEY (user_id, content_id, active),
+	FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE,
+	FOREIGN KEY (comment_id) REFERENCES comments(comment_id) ON DELETE CASCADE,
+	FOREIGN KEY (content_id) REFERENCES content(content_id) ON DELETE CASCADE
+);
+
+CREATE TABLE favorite_people (
+	user_id BIGINT NOT NULL,
+	person_id BIGINT NOT NULL,
+	created_at TIMESTAMP WITHOUT TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	PRIMARY KEY (user_id, person_id),
+	FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE,
+	FOREIGN KEY (person_id) REFERENCES people(person_id) ON DELETE CASCADE
+);
+
+CREATE TABLE watchlist (
+	user_id BIGINT NOT NULL,
+	content_id BIGINT NOT NULL,
+	wl_status VARCHAR(20) CHECK (wl_status IN ('queued','watched')) NOT NULL,
+	created_at TIMESTAMP WITHOUT TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	updated_at TIMESTAMP WITHOUT TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	PRIMARY KEY (user_id, content_id),
+	FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE,
+	FOREIGN KEY (content_id) REFERENCES content(content_id) ON DELETE CASCADE
+);
+
+CREATE TABLE user_genre_interests (
+	user_id BIGINT NOT NULL,
+	genre_id BIGINT NOT NULL,
+	created_at TIMESTAMP WITHOUT TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	PRIMARY KEY (user_id, genre_id),
+	FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE,
+	FOREIGN KEY (genre_id) REFERENCES genres(genre_id) ON DELETE CASCADE
+);
+
+CREATE TABLE people_searches (
+	person_id BIGINT NOT NULL,
+	user_id BIGINT NOT NULL,
+	searched_at TIMESTAMP WITHOUT TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	FOREIGN KEY (person_id) REFERENCES people(person_id) ON DELETE CASCADE,
+	FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE
+);
+
+CREATE TABLE content_searches (
+	content_id BIGINT NOT NULL,
+	user_id BIGINT NOT NULL,
+	searched_at TIMESTAMP WITHOUT TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	FOREIGN KEY (content_id) REFERENCES content(content_id) ON DELETE CASCADE,
+	FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE
+);
+
+CREATE TABLE news_searches (
+	news_id BIGINT NOT NULL,
+	user_id BIGINT NOT NULL,
+	searched_at TIMESTAMP WITHOUT TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	FOREIGN KEY (news_id) REFERENCES news(news_id) ON DELETE CASCADE,
+	FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE
+);
+
+CREATE TABLE saved_news (
+	news_id BIGINT NOT NULL,
+	user_id BIGINT NOT NULL,
+	saved_at TIMESTAMP WITHOUT TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	PRIMARY KEY (news_id, user_id),
+	FOREIGN KEY (news_id) REFERENCES news(news_id) ON DELETE CASCADE,
+	FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE
+);
+
+CREATE TABLE content_genres (
+	content_id BIGINT NOT NULL,
+	genre_id BIGINT NOT NULL,
+	PRIMARY KEY (content_id, genre_id),
+	FOREIGN KEY (content_id) REFERENCES content(content_id) ON DELETE CASCADE,
+	FOREIGN KEY (genre_id) REFERENCES genres(genre_id) ON DELETE CASCADE
+);
+
+CREATE TABLE people_genres (
+	person_id BIGINT NOT NULL,
+	genre_id BIGINT NOT NULL,
+	PRIMARY KEY (person_id, genre_id),
+	FOREIGN KEY (person_id) REFERENCES people(person_id) ON DELETE CASCADE,
+	FOREIGN KEY (genre_id) REFERENCES genres(genre_id) ON DELETE CASCADE
+);
+
+CREATE TABLE content_awards (
+	content_id BIGINT NOT NULL,
+	genre_id BIGINT NOT NULL,
+	awarded_at DATE NOT NULL,
+	PRIMARY KEY (content_id, genre_id, awarded_at),
+	FOREIGN KEY (content_id) REFERENCES content(content_id) ON DELETE CASCADE,
+	FOREIGN KEY (genre_id) REFERENCES genres(genre_id) ON DELETE CASCADE
+);
+
+CREATE TABLE people_awards  (
+	person_id BIGINT NOT NULL,
+	genre_id BIGINT NOT NULL,
+	awarded_at TEXT NOT NULL,
+	PRIMARY KEY (person_id, genre_id, awarded_at),
+	FOREIGN KEY (person_id) REFERENCES people(person_id) ON DELETE CASCADE,
+	FOREIGN KEY (genre_id) REFERENCES genres(genre_id) ON DELETE CASCADE
+);
+
+CREATE TABLE content_media (
+	media_id BIGINT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+	content_id BIGINT NOT NULL,
+	file_url VARCHAR(500) NOT NULL UNIQUE,
+	media_type VARCHAR(20) CHECK (media_type IN ('image','video')) NOT NULL,
+	is_featured BOOLEAN DEFAULT FALSE,
+	created_at TIMESTAMP WITHOUT TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	FOREIGN KEY (content_id) REFERENCES content(content_id) ON DELETE CASCADE
+);
+
+CREATE TABLE OTP_CODE (
+	otp_id BIGINT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+	user_id BIGINT NOT NULL,
+	otp_code VARCHAR(20) NOT NULL,
+	created_at TIMESTAMP WITHOUT TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	expired_at TIMESTAMP WITHOUT TIME ZONE NOT NULL DEFAULT (CURRENT_TIMESTAMP + INTERVAL '3 minutes'),
+	FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE
+);
+
+CREATE TABLE users_messages (
+	m_id BIGINT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+	user_id BIGINT NOT NULL,
+	title VARCHAR(200) NOT NULL,
+	body TEXT NOT NULL,
+	reply_to_id BIGINT DEFAULT NULL,
+	m_checked BOOLEAN DEFAULT FALSE,
+	created_at TIMESTAMP WITHOUT TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE,
+	-- FOREIGN KEY (reply_to_id) REFERENCES admins_messages(m_id) ON DELETE CASCADE
+);
+
+CREATE TABLE admins_messages (
+	m_id BIGINT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+	sender_id BIGINT NOT NULL,
+	resever_id BIGINT NOT NULL,
+	title VARCHAR(200) NOT NULL,
+	body TEXT NOT NULL,
+	reply_to_id BIGINT DEFAULT NULL,
+	m_checked BOOLEAN DEFAULT FALSE,
+	created_at TIMESTAMP WITHOUT TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	FOREIGN KEY (sender_id) REFERENCES users(user_id) ON DELETE CASCADE,
+	FOREIGN KEY (resever_id) REFERENCES users(user_id) ON DELETE CASCADE,
+	FOREIGN KEY (reply_to_id) REFERENCES users_messages(m_id) ON DELETE CASCADE
+);
+
+CREATE TABLE following (
+	follower_id BIGINT NOT NULL,
+	followed_id BIGINT NOT NULL,
+	created_at TIMESTAMP WITHOUT TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	PRIMARY KEY (follower_id, followed_id),
+	CONSTRAINT check_not_self_follow CHECK (follower_id <> followed_id),
+	FOREIGN KEY (follower_id) REFERENCES users(user_id) ON DELETE CASCADE,
+	FOREIGN KEY (followed_id) REFERENCES users(user_id) ON DELETE CASCADE
+);
+
+CREATE TABLE password_resets (
+	reset_id BIGINT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+	email VARCHAR(255) NOT NULL,
+	token_id VARCHAR(255) NOT NULL,
+	used BOOLEAN NOT NULL DEFAULT FALSE,
+	expires_at TIMESTAMP WITHOUT TIME ZONE NOT NULL DEFAULT (CURRENT_TIMESTAMP + INTERVAL '5 minutes'),
+	created_at TIMESTAMP WITHOUT TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	FOREIGN KEY (email) REFERENCES users(email) ON DELETE CASCADE
+);

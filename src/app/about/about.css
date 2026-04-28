@@ -1,0 +1,18 @@
+.platform-services ul,
+.access-security ul,
+.technical-deep ul {
+	list-style-type: disc;
+}
+.platform-services ul p,
+.access-security ul p,
+.technical-deep ul p {
+	max-width: 90%;
+}
+.platform-services ul li::marker,
+.access-security ul li::marker,
+.technical-deep ul li::marker {
+	color: #d6b629;
+}
+.technical-deep ul li ul li::marker {
+	color: #f71616;
+}

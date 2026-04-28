@@ -1,0 +1,249 @@
+.profile-page {
+	/* height: 100vh; */
+}
+.profile-head {
+	border-bottom: 1px solid #ffffff0d;
+}
+.profile-head span.profile-image{
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  -ms-border-radius: 50%;
+  -o-border-radius: 50%;
+	@media screen and (max-width: 765px) {
+		width: 50px;
+		height: 50px;
+		
+		svg {
+			width: 20px;
+		}
+	}
+}
+.profile-head .controle-profile-icons > button,
+.profile-head .controle-profile-icons > a {
+	background-color: #ffffff0d;
+	padding: 10px;
+	transition: var(--main-transition);
+	-webkit-transition: var(--main-transition);
+	-moz-transition: var(--main-transition);
+	-ms-transition: var(--main-transition);
+	-o-transition: var(--main-transition);
+	border-radius: 4px;
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+	-ms-border-radius: 4px;
+	-o-border-radius: 4px;
+}
+@media screen and (max-width: 765px) {
+	.profile-head .controle-profile-icons > button,
+	.profile-head .controle-profile-icons > a {
+		border-radius: 50% !important;
+		-webkit-border-radius: 50% !important;
+		-moz-border-radius: 50% !important;
+		-ms-border-radius: 50% !important;
+		-o-border-radius: 50% !important;
+		width: 35px;
+		height: 35px;
+	}
+
+	.profile-head .controle-profile-icons > button span,
+	.profile-head .controle-profile-icons > a span {
+		display: none;
+	}
+	.profile-head .controle-profile-icons > button svg,
+	.profile-head .controle-profile-icons > a svg {
+		min-width: 15px;
+	}
+}
+.profile-head .controle-profile-icons > button:hover,
+.profile-head .controle-profile-icons > a:hover {
+	background-color: var(--mainRed);
+	color: var(--light) !important;
+}
+.profile-side {
+	width: 340px;
+	height: fit-content;
+}
+.profile-side .image-container {
+	background-color: var(--light);
+	border: 4px solid var(--darkGray);
+	color: var(--darkGray);
+	padding: 10px 5px 0px;
+}
+.profile-side .side-head h2{
+	font-size: 20px;
+	font-weight: bold;
+}
+.profile-side .side-head span {
+	font-weight: 500;
+	font-size: 15px;
+}
+.profile-side .side-head p{
+	font-size: 14px;
+}
+.profile-side .active-btns button,
+.profile-side .active-btns a{
+	font-size: 14px;
+	min-width: 110px;
+	min-height: 36px;
+}
+.profile-side .side-body a svg { 
+	margin-inline-end: 12px !important;
+}
+.profile-side .side-body a.active,
+.profile-side .side-body a:hover {
+	color: var(--mainRed);
+}
+.profile-side .side-body a:hover {
+	background-color: #f716162c;
+}
+.profile-side .side-body a.active svg,
+.profile-side .side-body a:hover svg {
+	color: var(--mainRed) !important;
+}
+.profile-side span.logout-in-side {
+
+}
+
+/* messages section  */
+.profile-messages-tap span {
+	transition: all 0.5s;
+	-webkit-transition: all 0.5s;
+	-moz-transition: all 0.5s;
+	-ms-transition: all 0.5s;
+	-o-transition: all 0.5s;
+}
+.messages-box.tall-messages::before {
+	content: "";
+	position: absolute;
+	bottom: 0px;
+	inset-inline-start: 0px;
+	width: 100%;
+	height: 30px;
+	background-image: linear-gradient(#00000000, #0a0a0aa3);
+	z-index: 2;
+}
+.messages-box > div:last-of-type {
+	max-height: 250px;
+	scrollbar-width: none;
+}
+.messages-box .new-message-point {
+	display: flex;
+	width: 10px;
+	height: 10px;
+	background-color: var(--yallow);
+	border-radius: 50%;
+	-webkit-border-radius: 50%;
+	-moz-border-radius: 50%;
+	-ms-border-radius: 50%;
+	-o-border-radius: 50%;
+}
+.show-m-details-box {
+	opacity: 0;
+	z-index: 1;
+	transition: var(--main-transition);
+	-webkit-transition: var(--main-transition);
+	-moz-transition: var(--main-transition);
+	-ms-transition: var(--main-transition);
+	-o-transition: var(--main-transition);
+}
+.show-m-details-box.show {
+	opacity: 1;
+	z-index: 100;
+}
+.show-m-details-box > div {
+	width: 95%;
+	max-width: 600px;
+	max-height: 400px;
+	scrollbar-width: none;
+	transform: translateY(30px);
+	-webkit-transform: translateY(30px);
+	-moz-transform: translateY(30px);
+	-ms-transform: translateY(30px);
+	-o-transform: translateY(30px);
+	transition: var(--main-transition);
+	-webkit-transition: var(--main-transition);
+	-moz-transition: var(--main-transition);
+	-ms-transition: var(--main-transition);
+	-o-transition: var(--main-transition);
+}
+.show-m-details-box.show > div {
+	transform: translateY(0px);
+	-webkit-transform: translateY(0px);
+	-moz-transform: translateY(0px);
+	-ms-transform: translateY(0px);
+	-o-transform: translateY(0px);
+}
+.show-m-details-box.show span.show-reply-btn {
+	background-color: #ffffff16;
+}
+
+/* following-part */
+.following-part > div {
+	transition: var(--main-transition);
+	-webkit-transition: var(--main-transition);
+	-moz-transition: var(--main-transition);
+	-ms-transition: var(--main-transition);
+	-o-transition: var(--main-transition);
+}
+.following-part > div:hover {
+	color: var(--darkGray);
+}
+
+/* following-details */
+.following-details-box {
+	width: 95%;
+	max-width: 450px;
+	max-height: 500px;
+}
+.following-details-box img,
+.following-details-box span.user-image {
+	width: 36px;
+	height: 36px;
+}
+
+/* edit profile page---- */
+.update-user-form img {
+	width: 100px;
+	height: 100px;
+}
+.profile-privacy-btn {
+	border: 1px solid var(--mainGray);
+	color: var(--mainGray);
+	opacity: 0.5;
+	transition: var(--main-transition);
+	-webkit-transition: var(--main-transition);
+	-moz-transition: var(--main-transition);
+	-ms-transition: var(--main-transition);
+	-o-transition: var(--main-transition);
+}
+.profile-privacy-btn.active {
+	opacity: 1;
+	border: 1px solid var(--yallow);
+	color: var(--light);
+}
+.profile-privacy-btn span:last-of-type {
+	width: 6px;
+	height: 6px;
+	background-color: var(--mainGray);
+	border-radius: 50%;
+	-webkit-border-radius: 50%;
+	-moz-border-radius: 50%;
+	-ms-border-radius: 50%;
+	-o-border-radius: 50%;
+}
+.profile-privacy-btn.active span:last-of-type {
+	background-color: var(--yallow);
+}
+.profile-messages-sec ul li {
+	transition: var(--main-transition);
+	-webkit-transition: var(--main-transition);
+	-moz-transition: var(--main-transition);
+	-ms-transition: var(--main-transition);
+	-o-transition: var(--main-transition);
+}
+.profile-messages-sec ul li:hover {
+	background-color: #ffffff11;
+}

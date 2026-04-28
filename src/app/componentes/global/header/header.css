@@ -1,0 +1,104 @@
+.main-nav {
+	background-image: linear-gradient(90deg, #000000f2, #00000085);
+	backdrop-filter: blur(0px);
+	transition: all 0.5s;
+	-webkit-transition: all 0.5s;
+	-moz-transition: all 0.5s;
+	-ms-transition: all 0.5s;
+	-o-transition: all 0.5s;
+}
+.main-nav.blur-nav {
+	backdrop-filter: blur(7px);
+}
+.main-nav a.main-logo {
+	width: 100px;
+	height: 30px;
+	@media screen and (max-width: 575px) {
+		width: 75px;
+	}
+}
+ul.nav-links li a {
+	color: #fff;
+	text-transform: uppercase;
+}
+ul.nav-links li a:hover,
+ul.nav-links li a.active {
+	color: var(--mainRed);
+}
+nav .search-box input{
+	background-color: transparent;
+	outline: none;
+	border: none;
+	color: var(--light);
+}
+nav .user-profile div.profile-logo {
+	cursor: pointer;
+}
+nav .user-profile .profile-logo > span {
+	width: 30px;
+	height: 30px;
+	background-color: #f7161697;
+	transition: background-color 0.2s;
+	-webkit-transition: background-color 0.2s;
+	-moz-transition: background-color 0.2s;
+	-ms-transition: background-color 0.2s;
+	-o-transition: background-color 0.2s;
+}
+nav .user-profile .profile-logo:hover > span {
+	background-color: var(--mainRed);
+}
+nav .user-profile .profile-logo > svg {
+	transform: rotate(0deg);
+	-webkit-transform: rotate(0deg);
+	-moz-transform: rotate(0deg);
+	-ms-transform: rotate(0deg);
+	-o-transform: rotate(0deg);
+	transition: transform 0.2s ;
+	-webkit-transition: transform 0.2s ;
+	-moz-transition: transform 0.2s ;
+	-ms-transition: transform 0.2s ;
+	-o-transition: transform 0.2s ;
+}
+nav .user-profile .profile-logo > svg.flip {
+	transform: rotate(180deg);
+	-webkit-transform: rotate(180deg);
+	-moz-transform: rotate(180deg);
+	-ms-transform: rotate(180deg);
+	-o-transform: rotate(180deg);
+}
+.main-nav .main-search-result {
+	width: 95%;
+	max-width: 700px;
+	border: 1px solid #ffffff26;
+	top: -200px;
+	inset-inline-start: 50%;
+	transform: translateX(-50%);
+	-webkit-transform: translateX(-50%);
+	-moz-transform: translateX(-50%);
+	-ms-transform: translateX(-50%);
+	-o-transform: translateX(-50%);
+	transition: all 0.3s;
+	-webkit-transition: all 0.3s;
+	-moz-transition: all 0.3s;
+	-ms-transition: all 0.3s;
+	-o-transition: all 0.3s;
+	z-index: -1;
+	opacity: 0;
+	/* z-index: 100;
+	opacity: 1; */
+}
+.main-nav .main-search-result.show {
+	z-index: 100;
+	top: 100px;
+	opacity: 1;
+}
+.main-nav .main-search-result ul {
+	max-height: 400px;
+	scrollbar-width: none;
+}
+.main-nav .main-search-result ul li {
+	border-bottom: 1px solid #ffffff14;
+}
+.main-nav .main-search-result ul li img {
+	width: 60px;
+}

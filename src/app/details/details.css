@@ -1,0 +1,183 @@
+.content-details-page .details-top {
+	/* linear-gradient(90deg, #0d0505fa , #141212, #230e0e , #211f1f) */
+	background-image: linear-gradient(90deg, rgb(28, 15, 15) 10%, rgb(33, 31, 31) 72%, rgb(31,31,31))
+}
+.content-details-page .details-top .image-trailer {
+	display: grid;
+	grid-template-columns: repeat(10, 1fr);
+	grid-template-rows: 400px;
+	gap: 4px;
+	@media screen and (max-width: 991px) {
+		grid-template-rows: 350px;
+	}
+	@media screen and (max-width: 765px) {
+		grid-template-rows: 260px;
+	}
+	@media screen and (max-width: 575px) {
+		/* grid-template-rows: 300px; */
+	}
+}
+.content-details-page .details-top .image-trailer > div:first-of-type{
+	grid-column: span 2;
+	@media screen and (max-width: 991px) {
+		grid-column: span 3;
+	}
+	@media screen and (max-width: 575px) {
+		grid-column: span 4;
+		order: 2;
+	}
+}
+.content-details-page .details-top .image-trailer > div:last-of-type {
+	grid-column: span 2;
+	@media screen and (max-width: 991px) {
+		grid-column: span 10;
+		flex-direction: row !important;
+	}
+	@media screen and (max-width: 575px) {
+		grid-column: span 10;
+		order: 4;
+	}
+}
+.content-details-page .details-top .image-trailer > div:nth-child(2) {
+	display: none;
+	@media screen and (max-width: 575px) {
+		display: inline-block;
+		grid-column: span 6;
+		order: 3;
+	}
+}
+.content-details-page .details-top .image-trailer > div:nth-child(3) {
+	grid-column: span 6;
+	@media screen and (max-width: 991px) {
+		grid-column: span 7;
+	}
+	@media screen and (max-width: 575px) {
+		grid-column: span 10;
+		order: 1;
+	}
+}
+.content-details-page .details-top .image-trailer > div:nth-child(3) img {
+	object-fit: cover;
+	width: 100%;
+	height: 100%;
+	object-position: center;
+	filter: brightness(0.5);
+	-webkit-filter: brightness(0.5);
+	transition: var(--main-transition);
+	-webkit-transition: var(--main-transition);
+	-moz-transition: var(--main-transition);
+	-ms-transition: var(--main-transition);
+	-o-transition: var(--main-transition);
+}
+.content-details-page .details-top .image-trailer > div:nth-child(3) > div {
+	z-index: 10;
+}
+.content-details-page .details-top .image-trailer > div:nth-child(3):hover img {
+	filter: brightness(0.8);
+	-webkit-filter: brightness(0.8);
+}
+.content-details-page .details-top .image-trailer img{
+	height: 100%;
+	width: 100%;
+	@media screen and (max-width: 575px) {
+		max-height: 300px;
+	}
+}
+p.main-details-summary {
+	@media screen and (max-width: 575px) {
+		display: none;
+	}
+}
+.top-details-btns {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-grow: 1;
+	background-color: #ffffff14;
+	color: var(--light);
+	gap: 10px;
+	font-weight: bold;
+	flex-direction: column;
+	border-radius: 10px;
+	-webkit-border-radius: 10px;
+	-moz-border-radius: 10px;
+	-ms-border-radius: 10px;
+	-o-border-radius: 10px;
+	@media screen and (max-width: 765px) {
+		gap: 2px;
+		padding: 8px 10px;
+	}
+}
+.top-details-btns.active {
+	color: var(--yallow);
+}
+.top-details-btns:hover {
+	background-color: #ffffff2b;
+}
+
+/* rate-box-container */
+.rate-box-container {
+	background-color: #00000070;
+	z-index: 100;
+}
+.rate-box-container > div {
+	width: 90%;
+	max-width: 600px;
+}
+.rate-box-container > div .big-star {
+  top: 0px;
+  transform: translateY(-50%);
+  -webkit-transform: translateY(-50%);
+  -moz-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  -o-transform: translateY(-50%);
+}
+.rate-box-container > div .close-icon {
+	top: 0;
+  inset-inline-start: calc(100% - 40px);
+  transform: translateY(-31px);
+  -webkit-transform: translateY(-31px);
+  -moz-transform: translateY(-31px);
+  -ms-transform: translateY(-31px);
+  -o-transform: translateY(-31px);
+}
+.rate-box-container > div .score-num {
+	transform: translateY(-40px);
+	-webkit-transform: translateY(-40px);
+	-moz-transform: translateY(-40px);
+	-ms-transform: translateY(-40px);
+	-o-transform: translateY(-40px);
+}
+
+/* content-images-container */
+.details-body .content-images-container > div {
+	height: 180px;
+}
+
+/* rate-graph--- */
+.details-body .rate-graph {
+	flex: auto;
+}
+.details-body .rate-graph > div {
+	height: 100px;
+	width: calc(10% - 7.2px);
+}
+.details-body .rate-graph > div .graph-column {
+	width: 100%;
+	min-height: 2px;
+}
+.rating-graph svg {
+	@media screen and (max-width: 765px) {
+		width: 20px;
+	}
+}
+
+/* review */
+.all-comments-list {
+	width: 95%;
+	max-width: 700px;
+	max-height: 600px;
+	overflow: auto;
+	scrollbar-width: none;
+}
+

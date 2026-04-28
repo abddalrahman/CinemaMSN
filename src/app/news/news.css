@@ -1,0 +1,14 @@
+.news-details img {
+	width: 100px;
+}
+.news-details p {
+	letter-spacing: 0.8px;
+	word-spacing: 1px;
+	line-height: 1.6;
+}
+
+@media screen and (max-width: 576px) {
+	.news-details img {
+		width: 100%;
+	}
+}
