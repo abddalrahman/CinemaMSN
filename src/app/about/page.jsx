@@ -54,7 +54,7 @@ const About = () => {
 						<li className='mb-2'>
 							<span className='color-l fw-bold'>Registered Members:</span>
 							<p>
-								Customize your profile. Add reviews and ratings, interact with other reviews, follow other users' accounts, send messages to the 
+								Customize your profile. Add reviews and ratings, interact with other reviews, follow other users accounts, send messages to the 
 								site administration and reply to messages from the administration, create personal lists of watched content, saved news, ratings, 
 								reviews, favorite celebrities, and genres you are interested in.
 							</p>
