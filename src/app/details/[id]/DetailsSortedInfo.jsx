@@ -40,8 +40,8 @@ const DetailsSortedInfo = async ({ show, data }) => {
 				</>
 			)
 		}
-		const DirectorsData = getDirectorWriter(data, result, "Director");
-		const WritersData = getDirectorWriter(data, result, "Writer");
+		const DirectorsData = getDirectorWriter(data, result, "director");
+		const WritersData = getDirectorWriter(data, result, "writer");
 		const starsIDs = data.filter((person) => person.is_lead === true).map((p) => p.person_id);
 		const starsData = result?.names.filter((person) => starsIDs.includes(Number(person.person_id)));
 		return (
