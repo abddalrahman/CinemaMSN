@@ -5,8 +5,8 @@ export async function getHeroContent () {
 	try {
 		const queryStr = `
 			SELECT DISTINCT ON (c.content_id) c.content_id, c.title, c.summary, c.trailer_url, c.duration_minutes, c.content_type, cm.file_url 
-			FROM content c JOIN content_media cm ON c.content_id = cm.content_id WHERE c.c_status = 'upcoming' AND cm.is_featured = TRUE 
-			AND (c.trailer_url IS NOT NULL AND c.trailer_url != '') ORDER BY c.content_id, c.release_date DESC LIMIT 3;
+			FROM content c JOIN content_media cm ON c.content_id = cm.content_id WHERE c.c_status = 'upcoming' AND c.is_expected_popular = TRUE AND 
+			cm.is_featured = TRUE AND (c.trailer_url IS NOT NULL AND c.trailer_url != '') ORDER BY c.content_id, c.release_date DESC LIMIT 3;
 		`
 		const heroData = await pool.query(queryStr);
 		if (heroData.rowCount === 0) return null;
