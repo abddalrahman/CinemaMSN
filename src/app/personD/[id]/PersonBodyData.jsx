@@ -48,7 +48,7 @@ const PersonBodyData = async ({ id, personData }) => {
 		const directorContents = result.filter((content) => genresResult.some((genre) => {
 			return content.role_genre_id == genre.genre_id && genre.name.toLowerCase() === "director"
 		}));
-		const topLeads = result.filter(item => item.is_lead && item.season_number === 1).slice(0, 4);
+		const topLeads = result.filter(item => item.is_lead).slice(0, 4);
 
 		return (
 			<div className='body-person-data'>
